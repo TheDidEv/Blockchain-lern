@@ -1,8 +1,33 @@
 const assert = require('assert');//Assert is standard library into the Node.js. Assert is used for making assertions about tests.
 const ganache = require('ganache');//for creating a local blockchain for fast Ethereum
-const { Web3 } = require('web3')
+const { Web3 } = require('web3');
+const { interface, bytecode } = require('../compiler');
 
-const web3 = new Web3(ganache.provider());
+const web3 = new Web3(ganache.provider());//instance of Web3
+
+let accounts;
+let inbox;
+
+beforeEach(async () => {
+    //get a list of all accounts
+    //eth - etherium
+    accounts = await web3.eth.getAccounts();
+    // accounts = web3.eth.getAccounts().then(fethedAccounts => {
+    //     console.log(fethedAccounts);//output 10 randomly generated on local network
+    // });
+
+    inbox = await new web3.eth.Contract(JSON.parse(interface))
+        .deploy({ data: bytecode, arguments: ['Initial message in contract'] })
+        .send({ from: accounts[0], gas: '1000000' });
+});
+
+describe('Inbox', () => {
+    it('deploy contract', () => {
+        console.log("Accounts: ", accounts);//output 10 randomly generated on local network
+        console.log("Inbox contract: ", inbox);//data about contract
+    });
+});
+
 
 
 
