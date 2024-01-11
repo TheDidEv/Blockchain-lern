@@ -1,5 +1,7 @@
 # Lern Etherium/solidity
 
+- There I work with sepolia test network.
+
 ## Theory
 
 - Bytecode is the intermediate form of the program, which is EVM. This bytecode is then deployed on the Ethereum network, creating an instance of the smart contract.
@@ -13,8 +15,10 @@
 - For start compiling contract
 
 ```bash
-#Install  solc, i used version solc 0.4.17
+#Install  solc, i used version solc 0.4.17 
 npm i solc@0.4.17
+#Swithed to 0.8.23(lates)
+npm i solc
 #For starn compiling
 node compiler.js
 ```
@@ -33,4 +37,10 @@ npm i mocha ganache web3
 ```bash
 #For runing test(on package.json need change - script:{"tets": "mocha"})
 npm run test
+```
+
+
+- Install wallet provider truffle(used on Deploy.js)
+```bash
+npm i @truffle/hdwallet-provider
 ```

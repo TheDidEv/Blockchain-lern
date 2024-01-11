@@ -1,5 +1,6 @@
-// pragma solidity ^0.8.23;
-pragma solidity ^0.4.17;
+// SPDX-License-Identifier: MIT 
+pragma solidity ^0.8.23;
+//pragma solidity ^0.4.17;
 
 contract Inbox {
     string public message;

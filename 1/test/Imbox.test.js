@@ -1,7 +1,7 @@
 const assert = require('assert');//Assert is standard library into the Node.js. Assert is used for making assertions about tests.
-const ganache = require('ganache');//for creating a local blockchain for fast Ethereum
+const ganache = require('ganache');//for creating a local blockchain for fast Ethereum(tets network)
 const { Web3 } = require('web3');
-const { interface, bytecode } = require('../compiler');
+const { abi, evm } = require('../compiler');
 
 const web3 = new Web3(ganache.provider());//instance of Web3
 
@@ -20,8 +20,11 @@ beforeEach(async () => {
     //Contract - constructor function, first params on Contract its our ABI(param: interface)
     //data - its bytecode our contract, arguments - we pass on constructor(on solidity code)
     //Calling deploy starts to create an object can that can then be deployed to the network.
-    inbox = await new web3.eth.Contract(JSON.parse(interface))
-        .deploy({ data: bytecode, arguments: [INITIAL_MSG] })
+    inbox = await new web3.eth.Contract(abi)
+        .deploy({
+            data: evm.bytecode.object,
+            arguments: [INITIAL_MSG]
+        })
         .send({ from: accounts[0], gas: '1000000' });
 });
 
