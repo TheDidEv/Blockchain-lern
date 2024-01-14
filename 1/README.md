@@ -15,7 +15,7 @@
 - For start compiling contract
 
 ```bash
-#Install  solc, i used version solc 0.4.17 
+#Install  solc, i used version solc 0.4.17
 npm i solc@0.4.17
 #Swithed to 0.8.23(lates)
 npm i solc
@@ -39,8 +39,8 @@ npm i mocha ganache web3
 npm run test
 ```
 
-
 - Install wallet provider truffle(used on Deploy.js)
+
 ```bash
 npm i @truffle/hdwallet-provider
 ```
