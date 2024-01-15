@@ -7,7 +7,7 @@ require('dotenv').config();
 const provider = new HDWalletProvide(
     //pneumonic(secret phrase)(example: word1 word2 word3 ... word12)
     `${process.env.MNEMONIC}`,
-    //provider should connect to an infra node. (this lin get on infura)(example: )
+    //provider should connect to an infra node. (this lin get on infura)(example: https://sepolia.infura.io/v3/124312312v12312v124g12u)
     `${process.env.INFURA_URL}`
 );
 

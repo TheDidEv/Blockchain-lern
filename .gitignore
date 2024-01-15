@@ -2,3 +2,7 @@
 */node_modules
 */.env
 1/.env
+2/lottery-solidity/node_modules
+2/lottery-solidity/.env
+2/lottery-solidity/.vscode
+*.env

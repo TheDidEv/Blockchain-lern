@@ -1,4 +1,3 @@
-## Theory
-
-- require(...) - return the boolean value for a given condition 
-- address payable - address - data type which save user address; payable -  a function that can receive ether. 
+# Overide
+- lottery-react - ther front-end
+- lottery-solidity - ther logic of smart-contract
