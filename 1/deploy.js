@@ -5,9 +5,9 @@ const { abi, evm } = require('./compiler');
 require('dotenv').config();
 
 const provider = new HDWalletProvide(
-    //pneumonic(secret phrase)
+    //pneumonic(secret phrase)(example: word1 word2 word3 ... word12)
     `${process.env.MNEMONIC}`,
-    //provider should connect to an infra node. (this lin get on infura)
+    //provider should connect to an infra node. (this lin get on infura)(example: )
     `${process.env.INFURA_URL}`
 );
 

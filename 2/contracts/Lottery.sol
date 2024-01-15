@@ -28,8 +28,9 @@ contract Lottery {
             ); //abi.encodePacked - for packin in one byte array, becose keccak256 - can accept one argument
     }
 
-    function pickWiner() public {
-        require(msg.sender == manager); //ніхто окрім менеджера не зможе викликати цю функцію
+    function pickWiner() public restricted {
+        //закоментували require бо використовужмо restricted
+        //require(msg.sender == manager); //ніхто окрім менеджера не зможе викликати цю функцію
 
         uint256 index = random() % players.length;
         address payable winner = players[index];
@@ -39,5 +40,15 @@ contract Lottery {
 
         // Очистіть список гравців після визначення переможця
         players = new address payable[](0);
+    }
+
+    function getPlayers() public view returns (address payable[] memory) {//використовуємо memory щоб повернути динамічний масив
+        return players;
+    }
+
+    modifier restricted() {
+        //використовуємо modifier щоб позбутися повторення в коді
+        require(msg.sender == manager);
+        _;
     }
 }
