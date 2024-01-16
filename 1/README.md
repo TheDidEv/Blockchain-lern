@@ -39,7 +39,7 @@ npm i mocha ganache web3
 npm run test
 ```
 
-- Install wallet provider truffle(used on Deploy.js)
+- Install wallet provider truffle(used on Deploy.js) - Use it to sign transactions for addresses derived from a 12-word mnemonic.
 
 ```bash
 npm i @truffle/hdwallet-provider
