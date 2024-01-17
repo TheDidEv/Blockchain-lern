@@ -1,1 +1,2 @@
 - Initialize web3 on `src/web3.js` after then we can use on our project
+- abi and contract address in lottery.js and there is an explanation of where this data comes from

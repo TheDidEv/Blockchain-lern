@@ -4,6 +4,7 @@ pragma solidity ^0.8.23;
 contract Lottery {
     address public manager;
     address payable[] public players;
+    address lastWinner;
 
     constructor() public {
         manager = msg.sender; //the address of the user who called the instance of the contract
@@ -33,16 +34,15 @@ contract Lottery {
         //require(msg.sender == manager); //ніхто окрім менеджера не зможе викликати цю функцію
 
         uint256 index = random() % players.length;
-        address payable winner = players[index];
+        players[index].transfer(address(this).balance);
 
-        // Отримання балансу контракту і використання address(this).balance
-        winner.transfer(address(this).balance);
-
+        lastWinner = players[index];
         // Очистіть список гравців після визначення переможця
         players = new address payable[](0);
     }
 
-    function getPlayers() public view returns (address payable[] memory) {//використовуємо memory щоб повернути динамічний масив
+    function getPlayers() public view returns (address payable[] memory) {
+        //використовуємо memory щоб повернути динамічний масив
         return players;
     }
 

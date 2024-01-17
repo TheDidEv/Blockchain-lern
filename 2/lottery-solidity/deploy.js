@@ -13,12 +13,13 @@ const web3 = new Web3(provider);
 
 const deploy = async () => {
     const account = await web3.eth.getAccounts();
-    //console.log("Log account: ", account[0]);
+    console.log("Log account: ", account[0]);
 
     const result = await new web3.eth.Contract(abi)
         .deploy({ data: evm.bytecode.object })
         .send({ gas: '1000000', from: account[0] });
 
+    console.log(JSON.stringify(abi));
     console.log("Contraact was deployed to: ", result.options.address);
     provider.engine.stop();
 }
