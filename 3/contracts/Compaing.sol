@@ -3,10 +3,12 @@ pragma solidity ^0.8.23;
 
 contract Compaing {
     struct Request {
-        string  description;
+        string description;
         uint256 value;
         address recipient;
-        bool    complete;
+        bool complete;
+        uint256 approvalCount;
+        mapping(address => bool) approvals;
     }
 
     modifier restricted() {
@@ -14,10 +16,10 @@ contract Compaing {
         _;
     }
 
-    Request[] public request;
+    Request[] public requests;
     address public manager;
     uint256 public minimumContribution;
-    address[] public approvers;
+    mapping(address => bool) public approvers;
 
     constructor(uint256 minimum) {
         manager = msg.sender;
@@ -26,7 +28,8 @@ contract Compaing {
 
     function contribute() public payable {
         require(msg.value > minimumContribution);
-        approvers.push(msg.sender);
+
+        approvers[msg.sender] = true;
     }
 
     function createRequest(
@@ -34,13 +37,26 @@ contract Compaing {
         uint256 value,
         address recipient
     ) public restricted {
+        require(approvers[msg.sender]); //check bool variable
+
         Request memory newRequest = Request({
             description: description,
-            value:       value,
-            recipient:   recipient,
-            complete:    false
+            value: value,
+            recipient: recipient,
+            complete: false,
+            approvalCount: 0
         });
 
-        request.push(newRequest);
+        requests.push(newRequest);
+    }
+
+    function approveRequest(uint256 index) public {
+        Request storage request = requests[index];
+
+        require(approvers[msg.sender]);
+        require(!request[index].aprovals[msg.sender]);
+
+        request[index].approvals[msg.sender] = true;
+        request[index].approvalCount++;
     }
 }
