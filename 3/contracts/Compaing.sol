@@ -1,11 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
+contract CompaingFactory {
+    address[] public deployedCampaings;
+
+    function createCampaign(uint256 minimum) public {
+        Compaing newCampaing = new Compaing(minimum, msg.sender);
+        deployedCampaings.push(address(newCampaing));
+    }
+
+    function getDEployedCompaing() public view returns (address[] memory) {
+        return deployedCampaings;
+    }
+}
+
 contract Compaing {
     struct Request {
         string description;
         uint256 value;
-        address recipient;
+        address recipient; //we send money here
         bool complete;
         uint256 approvalCount;
         mapping(address => bool) approvals;
@@ -20,9 +33,10 @@ contract Compaing {
     address public manager;
     uint256 public minimumContribution;
     mapping(address => bool) public approvers;
+    uint256 public approversCount;
 
-    constructor(uint256 minimum) {
-        manager = msg.sender;
+    constructor(uint256 minimum, address creator) {
+        manager = creator;
         minimumContribution = minimum; //it`s not ether, it`s wai
     }
 
@@ -30,6 +44,7 @@ contract Compaing {
         require(msg.value > minimumContribution);
 
         approvers[msg.sender] = true;
+        approversCount++;
     }
 
     function createRequest(
@@ -58,5 +73,14 @@ contract Compaing {
 
         request[index].approvals[msg.sender] = true;
         request[index].approvalCount++;
+    }
+
+    function finalizeRequest(uint256 index) public restricted {
+        Request storage request = requests[index];
+        require(request.approvalCount > (approversCount / 2));
+        require(!request[index].complete);
+
+        request.recipient.transfer(request.value);
+        request[index].complete = true;
     }
 }
